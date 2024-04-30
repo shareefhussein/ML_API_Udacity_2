@@ -15,7 +15,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.12.3' 
+          python-version: '3.12.3'
 
       - name: Upgrade pip
         run: |
@@ -27,15 +27,16 @@ jobs:
 
       - name: Setup DVC
         uses: iterative/setup-dvc@v1
+
       - name: Initialize DVC Repository
-          run: |
+        run: |
           dvc init
           dvc pull data -R
         shell: /usr/bin/bash -e {0}
         env:
           pythonLocation: /opt/hostedtoolcache/Python/3.12.3/x64
           LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.3/x64/lib
-    
+
       - name: Pull data from DVC
         run: dvc pull data -R
 
