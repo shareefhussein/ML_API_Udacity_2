@@ -1,33 +1,38 @@
 """
-train test split test
-
+This module is designed to perform tests on the training and testing phases of a machine learning model,
+including verifying the creation of model files and the proper execution of data splitting.
 """
+
 import os
-import pytest
 import pandas as pd
-from joblib import load
 from src.train_test_model import train_test_model
 from src.process_data import process_data
 from sklearn.model_selection import train_test_split
 
 
 def test_model_files_generated():
+    """
+    Test to ensure that all necessary model files are generated.
+    """
     train_test_model()
 
-    assert os.path.isfile("./models/model.joblib")
-    assert os.path.isfile("./models/lb.joblib")
-    assert os.path.isfile("./models/encoder.joblib")
+    assert os.path.isfile("./models/model.joblib"), "Model file is missing"
+    assert os.path.isfile("./models/lb.joblib"), "Label binarizer file is missing"
+    assert os.path.isfile("./models/encoder.joblib"), "Encoder file is missing"
 
 
 def test_data_split():
-    # Run the train_test_model function
+    """
+    Test the data splitting process to ensure it correctly splits the data and processes it.
+    """
+    # Run the train_test_model function to simulate model training and testing
     train_test_model()
     
-    df = pd.read_csv('./data/cleaned_data/census.csv')
-    train, _ = train_test_split(df, test_size=0.20)  
+    # Load the cleaned data
+    data_frame = pd.read_csv('./data/cleaned_data/census.csv')
+    train_data, _ = train_test_split(data_frame, test_size=0.20)  
 
-
-    cat_features = [
+    categorical_features = [
         "workclass",
         "education",
         "marital-status",
@@ -38,17 +43,12 @@ def test_data_split():
         "native-country",
     ]
     
-    X_train, y_train, encoder, lb = process_data(
-        train, categorical_features=cat_features, label="salary", training=True
+    # Process the training data
+    x_train, y_train, _, _ = process_data(
+        train_data, categorical_features=categorical_features, label="salary", training=True
     )
 
-
-    # Check if X_train and y_train are not empty
-    assert X_train.shape[0] > 0
-    assert y_train.shape[0] > 0
-
-    # Check if X_train and y_train have the same number of samples
-    assert X_train.shape[0] == y_train.shape[0]
-
-
-    
+    # Validate that processed training data is not empty and the shapes match
+    assert x_train.shape[0] > 0, "X_train is empty"
+    assert y_train.shape[0] > 0, "y_train is empty"
+    assert x_train.shape[0] == y_train.shape[0], "X_train and y_train sample sizes do not match"

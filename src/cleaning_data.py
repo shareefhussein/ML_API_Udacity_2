@@ -1,33 +1,23 @@
 """
-cleaning data code
-
+Cleaning data code
 """
 
-import numpy as np
 import pandas as pd
 
 def clean_data():
     """
-    clean data function to use it in model training 
+    Clean data function to use it in model training.
     """
-    
-    df = pd.read_csv("./data/raw_data/census.csv")
-    df.columns = df.columns.str.strip()
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-    
-    df.replace({'?': None}, inplace=True)
-    df.dropna(inplace=True)
-    
-    # drop unwanted columns
-    
-    df.drop("fnlgt", axis="columns", inplace=True)
-    df.drop("education-num", axis="columns", inplace=True)
-    df.drop("capital-gain", axis="columns", inplace=True)
-    df.drop("capital-loss", axis="columns", inplace=True)
-    
+    data_frame = pd.read_csv("./data/raw_data/census.csv")
+    data_frame.columns = data_frame.columns.str.strip()
+    data_frame = data_frame.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
+    data_frame.replace({'?': None}, inplace=True)
+    data_frame.dropna(inplace=True)
+
+    # Drop unwanted columns
+    columns_to_drop = ["fnlgt", "education-num", "capital-gain", "capital-loss"]
+    data_frame.drop(columns=columns_to_drop, axis="columns", inplace=True)
+
     print("Export cleaned data to CSV file.")
-    df.to_csv("./data/cleaned_data/census.csv",index=False)
-    
-
-
-
+    data_frame.to_csv("./data/cleaned_data/census.csv", index=False)

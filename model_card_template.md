@@ -15,13 +15,10 @@
 - **Evaluation Data**: Evaluation utilizes the remaining 20% of the data from the same [UCI Census Income Dataset](https://archive.ics.uci.edu/ml/datasets/census+income).
 
 ### Performance Metrics
-- **Accuracy**: The model is evaluated based on the accuracy.
+- **Accuracy**: The model is evaluated based on the accuracy with value: 0.85
 
 ### Ethical Considerations
 - **Inherent Bias**: The inclusion of sensitive attributes such as race, gender, and country of origin in the dataset can lead to inherent biases in the model's predictions. These biases could perpetuate or even exacerbate existing societal inequalities, particularly in employment-related decision-making.
 
 - **Impact on Individuals**: The model’s predictions could significantly impact individuals' livelihoods. Misclassifications or biased predictions could affect job prospects, promotions, and overall economic stability.
-
-### Caveats and Recommendations
-
 

@@ -1,38 +1,41 @@
-import os
-import pytest
+"""
+This module is designed to test the performance of a machine learning model on pre-processed data.
+It loads the trained models and evaluates them using standard metrics such as accuracy, precision,
+recall, and F1 score. The tests ensure that all metrics fall within acceptable ranges.
+"""
+
 import pandas as pd
 from joblib import load
 from sklearn.metrics import accuracy_score
 from src.process_data import process_data
 from src.model import compute_model_metrics
+import pytest
 
 @pytest.fixture
-def data():
+def dataset():
     """
-    Get dataset
+    Get dataset.
     """
-    data = pd.read_csv("./data/cleaned_data/census.csv")
-    return data
+    return pd.read_csv("./data/cleaned_data/census.csv")
 
 @pytest.fixture
-def saved_models():
+def trained_models():
     """
-    Load the trained model, label binarizer, and encoder
+    Load the trained model, label binarizer, and encoder.
     """
     model = load("./models/model.joblib")
     encoder = load("./models/encoder.joblib")
-    lb = load("./models/lb.joblib")
-    
-    return model, encoder, lb
+    label_binarizer = load("./models/lb.joblib")
+    return model, encoder, label_binarizer
 
 
-def test_model_performance(data, saved_models):
+def test_model_performance(dataset, trained_models):
     """
-    Test model performance on test data
+    Test model performance on test data.
     """
-    model, encoder, lb = saved_models
+    model, encoder, label_binarizer = trained_models
 
-    cat_features = [
+    categorical_features = [
         "workclass",
         "education",
         "marital-status",
@@ -43,27 +46,23 @@ def test_model_performance(data, saved_models):
         "native-country",
     ]
 
-    X_test, y_test, _, _ = process_data(
-        data,
-        categorical_features=cat_features,
+    x_test, y_test, _, _ = process_data(
+        dataset,
+        categorical_features=categorical_features,
         label="salary",
         encoder=encoder,
-        lb=lb,
+        lb=label_binarizer,
         training=False
     )
 
-    y_pred = model.predict(X_test)
+    y_pred = model.predict(x_test)
 
     # Compute model performance metrics
     accuracy = accuracy_score(y_test, y_pred)
-    precision, recall, f1 = compute_model_metrics(y_test, y_pred)
+    precision, recall, f1_score = compute_model_metrics(y_test, y_pred)
 
     # Ensure metrics are within acceptable ranges
-    assert accuracy >= 0.0 and accuracy <= 1.0
-    assert precision >= 0.0 and precision <= 1.0
-    assert recall >= 0.0 and recall <= 1.0
-    assert f1 >= 0.0 and f1 <= 1.0
-
-
-    
-    
+    assert 0.0 <= accuracy <= 1.0
+    assert 0.0 <= precision <= 1.0
+    assert 0.0 <= recall <= 1.0
+    assert 0.0 <= f1_score <= 1.0
