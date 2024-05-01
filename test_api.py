@@ -5,7 +5,7 @@ client = TestClient(app)
 
 def test_get_data():
     """
-    Test GET request to root endpoint
+    Test GET request to root endpoint.
     """
     response = client.get("/")
     assert response.status_code == 200
@@ -13,7 +13,7 @@ def test_get_data():
 
 def test_model_inference_valid_input():
     """
-    Test POST request with valid input data
+    Test POST request with valid input data.
     """
     client_info = {
         "age": 35,
@@ -36,7 +36,7 @@ def test_model_inference_valid_input():
 
 def test_model_inference_invalid_input():
     """
-    Test POST request with invalid input data (missing required field)
+    Test POST request with invalid input data (missing required field).
     """
     client_info = {
         "age": 35,
@@ -55,13 +55,9 @@ def test_model_inference_invalid_input():
     response = client.post("/", json=client_info)
     assert response.status_code == 422  # Expect 422 Unprocessable Entity
 
-# I've removed the tests related to missing/invalid model files and invalid outputs since handling them correctly
-# would require substantial changes to the code that manages the model's loading and error handling,
-# which is not displayed in the provided script.
-
 def test_model_inference_positive_outcome():
     """
-    Test POST request with input data expected to result in a positive outcome
+    Test POST request with input data expected to result in a positive outcome.
     """
     client_info = {
         "age": 35,
@@ -85,7 +81,7 @@ def test_model_inference_positive_outcome():
 
 def test_model_inference_negative_outcome():
     """
-    Test POST request with input data expected to result in a negative outcome
+    Test POST request with input data expected to result in a negative outcome.
     """
     client_info = {
         "age": 25,

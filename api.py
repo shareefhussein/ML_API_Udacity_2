@@ -1,7 +1,7 @@
 import os
 import sys
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from joblib import load
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
@@ -9,12 +9,13 @@ from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
+
 class Client(BaseModel):
     age: int
     workclass: str
     relationship: str
     education: str
-    education_num: int  # corrected from 'education-num' to 'education_num' to match Python naming conventions
+    education_num: int
     native_country: str
     race: str
     sex: str
@@ -32,7 +33,7 @@ class Client(BaseModel):
                 'workclass': 'State-gov',
                 'fnlgt': 2334,
                 'education': 'Bachelors',
-                'education_num': 13,  # corrected to match updated model
+                'education_num': 13,
                 'marital_status': 'Never-married',
                 'occupation': 'Prof-speciality',
                 'relationship': 'Not-in-family',
@@ -45,15 +46,18 @@ class Client(BaseModel):
             }
         }
 
+
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("dvc config core.no_scm true")
     if os.system("dvc pull") != 0:
         sys.exit("dvc pull failed")
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
+
 @app.get("/")
 async def get_data():
     return {"message": "Greetings from Shareef!!"}
+
 
 @app.post("/")
 async def model_inference(client_info: Client):
@@ -63,15 +67,18 @@ async def model_inference(client_info: Client):
         label_binarizer = load("./models/lb.joblib")
 
         categorical_features = [
-            "workclass", "relationship", "education", "native_country", "race", "sex", "marital_status", "occupation"
+            "workclass", "relationship", "education", 
+            "native_country", "race", "sex", 
+            "marital_status", "occupation"
         ]
 
-        client_df = pd.DataFrame([client_info.dict().values()], columns=client_info.dict().keys())
+        client_df = pd.DataFrame([client_info.dict().values()],
+                                 columns=client_info.dict().keys())
 
         preprocessed_data, _, _, _ = process_data(
             client_df,
             categorical_features=categorical_features,
-            encoder=encoder, lb=label_binarizer, training=False
+            encoder=encoder, label_binarizer=label_binarizer, training=False
         )
 
         prediction = inference(model, preprocessed_data)
@@ -79,5 +86,4 @@ async def model_inference(client_info: Client):
         return {"Predictions": prediction_label}
     except Exception as e:
         # Enhanced error message
-        return JSONResponse(status_code=500, content={"message": f"Internal Server Error: {str(e)}"})
-
+        return JSONResponse(status_code=500, content={"message": str(e)})

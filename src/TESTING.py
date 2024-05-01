@@ -3,18 +3,18 @@ from joblib import load
 from process_data import process_data
 
 def load_resources():
-    """ Load trained model and preprocessing objects. """
+    """Load trained model and preprocessing objects."""
     try:
-        model = load("./models/model.joblib")  # Update path as needed
-        encoder = load("./models/encoder.joblib")  # Update path as needed
-        label_binarizer = load("./models/lb.joblib")  # Update path as needed
+        model = load("./models/model.joblib")
+        encoder = load("./models/encoder.joblib")
+        label_binarizer = load("./models/lb.joblib")
     except Exception as e:
         print(f"Error loading resources: {e}")
         return None, None, None
     return model, encoder, label_binarizer
 
 def prepare_and_predict(test_data):
-    """ Prepare test data and predict using the loaded model. """
+    """Prepare test data and predict using the loaded model."""
     model, encoder, label_binarizer = load_resources()
     if None in [model, encoder, label_binarizer]:
         return "Failed to load resources."
@@ -24,12 +24,12 @@ def prepare_and_predict(test_data):
         "workclass", "education", "marital-status", "occupation",
         "relationship", "race", "sex", "native-country"
     ]
-    
+
     x_test, _, _, _ = process_data(
-        test_data, 
-        categorical_features=categorical_features, 
-        training=False, 
-        encoder=encoder, 
+        test_data,
+        categorical_features=categorical_features,
+        training=False,
+        encoder=encoder,
         label_binarizer=label_binarizer
     )
 

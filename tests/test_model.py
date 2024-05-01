@@ -22,17 +22,11 @@ def test_trained_model(dataset):
     """
     Test that the trained model is an instance of GradientBoostingClassifier.
     """
-    train_data, _ = train_test_split(dataset, test_size=0.20)
+    train_data, _ = train_test_split(dataset, test_size=0.20, random_state=42)
     
     categorical_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country",
+        "workclass", "education", "marital-status", "occupation",
+        "relationship", "race", "sex", "native-country",
     ]  
     
     x_train, y_train, _, _ = process_data(
@@ -41,4 +35,5 @@ def test_trained_model(dataset):
     )
     
     model = train_model(x_train, y_train)
-    assert isinstance(model, GradientBoostingClassifier), "Model is not an instance of GradientBoostingClassifier"
+    assert isinstance(model, GradientBoostingClassifier), \
+        "Model is not an instance of GradientBoostingClassifier"
