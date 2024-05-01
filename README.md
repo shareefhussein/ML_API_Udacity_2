@@ -30,13 +30,13 @@ python -m pytest ML_API_Udaicty -vv --log-cli-level=DEBUG
 
 Sanity Check: Verify the setup by running:
 
-python -m ML_API_Udaicty.src.check.sanitycheck
+python -m ML_API_Udaicty.src.sanitycheck
 
-When prompted, use ML_API_Udaicty/tests/test_main.py as the test file.
+
 Model Training and Metrics Calculation:
 
 # Train the model
-python -m ML_API_Udaicty.src.ml.train_model
+python -m ML_API_Udaicty.src.train_test_model
 
 # Calculate metrics
 python -m ML_API_Udaicty.src.model.slice_output.txt
