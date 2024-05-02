@@ -24,8 +24,10 @@ def train_model(x_train, y_train):
     print("Training the model")
     model.fit(x_train, y_train)
 
-    # Optionally return the cross-validation scores to evaluate model performance
-    scores = cross_val_score(model, x_train, y_train, scoring='accuracy', cv=kfold, n_jobs=-1)
+    # Optionally return the cross-validation
+    # scores to evaluate model performance
+    scores = cross_val_score(model, x_train,
+                             y_train, scoring='accuracy', cv=kfold, n_jobs=-1)
     print("Cross-validation scores:", scores)
 
     return model
@@ -33,7 +35,8 @@ def train_model(x_train, y_train):
 
 def compute_model_metrics(labels, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1-score.
+    Validates the trained machine
+    learning model using precision, recall, and F1-score.
 
     Parameters:
     - labels (np.array): Known labels, binarized.
