@@ -1,7 +1,10 @@
 """
-This module is designed to test the performance of a machine learning model on pre-processed data.
-It loads the trained models and evaluates them using standard metrics such as accuracy, precision,
-recall, and F1 score. The tests ensure that all metrics fall within acceptable ranges.
+This module is designed to test
+the performance of a machine learning model on pre-processed data.
+It loads the trained models and
+evaluates them using standard metrics such as accuracy, precision,
+recall, and F1 score.
+The tests ensure that all metrics fall within acceptable ranges.
 """
 
 import pandas as pd
@@ -11,12 +14,14 @@ from sklearn.metrics import accuracy_score
 from src.process_data import process_data
 from src.model import compute_model_metrics
 
+
 @pytest.fixture
 def dataset():
     """
     Load and return the dataset used for testing.
     """
     return pd.read_csv("./data/cleaned_data/census.csv")
+
 
 @pytest.fixture
 def trained_models():
@@ -28,9 +33,11 @@ def trained_models():
     label_binarizer = load("./models/lb.joblib")
     return model, encoder, label_binarizer
 
+
 def test_model_performance(dataset, trained_models):
     """
-    Test model performance on test data to ensure that accuracy, precision, recall,
+    Test model performance on
+    test data to ensure that accuracy, precision, recall,
     and F1 score metrics are within acceptable ranges.
     """
     model, encoder, label_binarizer = trained_models
