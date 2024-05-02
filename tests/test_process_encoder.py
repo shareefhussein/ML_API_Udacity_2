@@ -19,6 +19,7 @@ from src.model import compute_model_metrics
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
+
 @pytest.fixture
 def dataset():
     """
