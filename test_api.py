@@ -50,6 +50,7 @@ def test_model_inference_valid_input():
     client_info_dict = client_info.to_dict(orient='records')
 
     response = client.post("/", json=client_info_dict)
+    print(response)
 
 
 def test_model_inference_invalid_input():
