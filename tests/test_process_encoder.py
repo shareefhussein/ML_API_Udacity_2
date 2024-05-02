@@ -11,9 +11,6 @@ import pandas as pd
 import pytest
 import warnings
 from joblib import load
-from sklearn.metrics import accuracy_score
-from src.process_data import process_data
-from src.model import compute_model_metrics
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -37,5 +34,3 @@ def trained_models():
     encoder = load("./models/encoder.joblib")
     label_binarizer = load("./models/lb.joblib")
     return model, encoder, label_binarizer
-
-
