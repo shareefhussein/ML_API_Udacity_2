@@ -9,11 +9,15 @@ The tests ensure that all metrics fall within acceptable ranges.
 
 import pandas as pd
 import pytest
+import warnings
 from joblib import load
 from sklearn.metrics import accuracy_score
 from src.process_data import process_data
 from src.model import compute_model_metrics
 
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 @pytest.fixture
 def dataset():
