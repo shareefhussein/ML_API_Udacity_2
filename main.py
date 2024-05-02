@@ -1,6 +1,8 @@
 """
-This module is designed to execute a machine learning pipeline which includes data cleaning,
-model training and testing, and model scoring checks based on specified parameters.
+This module is designed to execute a machine learning
+pipeline which includes data cleaning,
+model training and testing, and model scoring checks
+based on specified parameters.
 """
 
 import argparse
@@ -15,8 +17,9 @@ def execute_pipeline(parameter):
     """
     Execute the full pipeline based on the specified parameter.
 
-    :param parameter: A string specifying which part of the pipeline to run.
-                      Can be 'cleaning_data', 'train_test_model', 'check_scoring', or 'all'.
+    :param parameter:
+     A string specifying which part of the pipeline to run.
+     Can be 'cleaning_data', 'train_test_model', 'check_scoring', or 'all'.
     """
     logging.basicConfig(level=logging.INFO)
 
@@ -31,7 +34,8 @@ def execute_pipeline(parameter):
             action()
     else:
         if parameter in actions:
-            logging.info(f"{parameter.replace('_', ' ').capitalize()} procedure is running...")
+            logging.info(
+                f"{parameter.replace('_', ' ')} procedure is running...")
             actions[parameter]()
 
 
