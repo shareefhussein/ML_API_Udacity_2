@@ -1,7 +1,3 @@
-"""
-Check scoring code
-"""
-
 import logging
 import pandas as pd
 from joblib import load
@@ -43,12 +39,17 @@ def scoring_check():
             y_pred = trained_model.predict(x_test)
             precision, recall, fbeta = compute_model_metrics(y_test, y_pred)
 
-            variation = (f"[{category}->{category_value}] Precision: {precision} "
-                         f"Recall: {recall} FBeta: {fbeta}")
+            variation = (
+                f"[{category}->{category_value}] "
+                f"Precision: {precision} "
+                f"Recall: {recall} "
+                f"FBeta: {fbeta}"
+            )
             logging.info(variation)
             metrics.append(variation)
 
-    with open("./models/slice_output.txt", 'w', encoding='utf-8') as slice_output:
+    with open("./models/slice_output.txt", 'w',
+              encoding='utf-8') as slice_output:
         slice_output.writelines(metric + '\n' for metric in metrics)
 
 
