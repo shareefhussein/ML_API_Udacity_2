@@ -6,6 +6,7 @@ from pandas.core.frame import DataFrame
 
 client = TestClient(app)
 
+
 def test_get_data():
     """
     Test GET request to root endpoint.
@@ -14,9 +15,11 @@ def test_get_data():
     assert response.status_code == 200
     assert response.json() == {"message": "Greetings from Shareef!!"}
 
+
 def test_model_inference_valid_input():
     """
-    Test POST request with valid input data to ensure the API returns correct status and output.
+    Test POST request with valid
+    input data to ensure the API returns correct status and output.
     """
     array = np.array([[
                      32,
@@ -47,12 +50,13 @@ def test_model_inference_valid_input():
     client_info_dict = client_info.to_dict(orient='records')
 
     response = client.post("/", json=client_info_dict)
-    
+
+
 def test_model_inference_invalid_input():
     """
-    Test POST request with missing fields to ensure the API handles invalid input gracefully.
+    Test POST request with missing fields
+    to ensure the API handles invalid input gracefully.
     """
-    # Here, intentionally leaving out 'marital_status' to simulate an invalid input scenario.
     client_info = {
         "age": 35,
         "workclass": "Private",
@@ -69,7 +73,3 @@ def test_model_inference_invalid_input():
     }
     response = client.post("/", json=client_info)
     assert response.status_code == 422  # Expect 422 Unprocessable Entity
-
-
-
-
