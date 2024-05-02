@@ -5,7 +5,8 @@ from fastapi import FastAPI
 from joblib import load
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
-
+from src.model import inference
+from src.process_data import process_data
 
 app = FastAPI()
 
@@ -67,8 +68,8 @@ async def model_inference(client_info: Client):
         label_binarizer = load("./models/lb.joblib")
 
         categorical_features = [
-            "workclass", "relationship", "education", 
-            "native_country", "race", "sex", 
+            "workclass", "relationship", "education",
+            "native_country", "race", "sex",
             "marital_status", "occupation"
         ]
 
