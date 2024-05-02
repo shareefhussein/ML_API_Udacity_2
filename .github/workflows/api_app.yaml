@@ -47,4 +47,5 @@ jobs:
         run: flake8
         
       - name: Run pytest
-        run: pytest -v
+        run: python -m pytest -W ignore::DeprecationWarning -W ignore::UserWarning
+
